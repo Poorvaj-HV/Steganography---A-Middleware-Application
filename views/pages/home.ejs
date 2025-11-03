@@ -10,6 +10,92 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-section h3, .footer-section h4 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #3498db;
+        }
+
+        .social-icons a {
+            color: #bdc3c7;
+            font-size: 24px;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #3498db;
+        }
+
+
+        /* .social-icons {
+            display: flex;
+            gap: 10px;
+        } */
+
+        /* .social-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #34495e;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #3498db;
+        } */
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #34495e;
+        }
+
+    </style>
 </head>
 <body class="bg-gray-50">
 
@@ -24,10 +110,10 @@
                 <h1 class="text-5xl font-bold text-gray-800 mb-6">Hide Secrets in Plain Sight</h1>
                 <p class="text-xl text-gray-600 mb-8">StegoHide uses advanced steganography techniques to embed secret messages within ordinary images, making them invisible to the naked eye.</p>
                 <div class="flex gap-4">
-                    <a href="encode.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-colors duration-300 flex items-center gap-2">
+                    <a href="encode" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-colors duration-300 flex items-center gap-2">
                         <i data-feather="lock"></i> Hide a Message
                     </a>
-                    <a href="decode.html" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-colors duration-300 flex items-center gap-2">
+                    <a href="decode" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-lg transition-colors duration-300 flex items-center gap-2">
                         <i data-feather="unlock"></i> Reveal a Message
                     </a>
                 </div>
@@ -70,6 +156,54 @@
     </main>
 
     <custom-footer></custom-footer>
+    <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>StegoHide</h3>
+            <p>Hide your secrets in plain sight with advanced steganography techniques.</p>
+            <div class="social-icons">
+                <a href="https://github.com/Poorvaj-HV"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.instagram.com/poorvaj_hv/"><i class="fa-brands fa-square-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/poorvaj-h-v-469a11328/"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/@ProgramPortfolio-x2e"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/encode">Encode Message</a></li>
+                <li><a href="/decode">Decode Message</a></li>
+                <li><a href="/admin">Admin</a></li>
+                <li><a href="/about">About Us</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="/about">Privacy Policy</a></li>
+                <li><a href="/about">Terms of Service</a></li>
+                <li><a href="/about">Cookie Policy</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <ul>
+                <li>info@stegohide.com</li>
+                <li>Support Center</li>
+                <li>Feedback</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 StegoHide. All rights reserved.</p>
+    </div>
+</footer>
+
     
     <script src="components/navbar.js"></script>
     <script src="components/footer.js"></script>

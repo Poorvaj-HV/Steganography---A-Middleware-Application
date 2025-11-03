@@ -20,8 +20,12 @@
   "homepage": "https://github.com/Poorvaj-HV/Steganography---A-Middleware-Application#readme",
   "dependencies": {
     "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
     "express": "^5.1.0",
+    "method-override": "^3.0.0",
     "mongoose": "^8.19.2",
-    "nodemon": "^3.1.10"
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.10",
+    "sharp": "^0.34.4"
   }
 }
