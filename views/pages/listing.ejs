@@ -4,11 +4,17 @@
     <h3> All data </h3>
     <ul>
         <% for(let data of allData) { %>
-            <li>
-                <strong>Image Name:</strong> <%= data.image %> 
-                <strong>Email:</strong> <%= data.email %>
-            </li>
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="listing image">
+                <div class="card-body">
+                    <p class="card-text"><%= data.email %></p>
+                </div>
+            </div>
         <% }; %>
     </ul>
 </body>
-</html>
+
+<!-- <li>
+                <strong>Image Name:</strong>  data.image %> 
+                <strong>Email:</strong> data.email 
+            </li> -->

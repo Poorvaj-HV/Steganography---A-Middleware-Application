@@ -293,17 +293,37 @@
 <% layout('layouts/boilerplate') -%>
 
 <body>
-    <h2> <i class="fa-solid fa-lock-open"></i> Decryption : Reveal Hidden Message </h2>
-    <p> Enter a valid email to extract the secret message hidden within it. </p>
-
+    <div class="row">
+        <div class="col-8 offset-2">
+            <h2> <i class="fa-solid fa-lock-open"></i> Decryption : Reveal Hidden Message </h2>
+            <p> Enter a valid email to extract the secret message hidden within it. </p>
+            <br>
     <div class="formdiv">
         <form method="POST" action="/decode">
-            <div>
-                <lable for="emailid"><i class="fa-regular fa-envelope"></i> Enter a valid Email</lable>
-                <input type="email" id="emailid" name="email" placeholder="Enter a valid email">
+            <div class="mb-3">
+                <lable for="email" class="form-label"><i class="fa-regular fa-envelope"></i> Enter a valid Email</lable>
+                <input type="email" name="Encode[email]" placeholder="Enter a valid email" class="form-control" required>
             </div>
+            <div class="mb-3">
+                <lable for="password" class="form-label"><i class="fa-solid fa-eye-slash"></i> Enter password </lable>
+                <input type="password" name="Encode[password]" placeholder="Enter password" class="form-control" required>
+            </div>
+            <button class="btn btn-outline-dark" type="submit"><i class="fa-solid fa-square-envelope"></i> Verify Email </button>
             <br><br>
-            <button type="submit"><i class="fa-solid fa-server"></i> Check Email </button>
+            <div class="mb-3 col-md-4">
+                <label for="otp" class="form-label"> Enter OTP </label>
+                <input type="text" name="otp" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6}" maxlength="6" class="form-control" required>
+            </div>
+            <button class="btn btn-outline-dark" type="submit"><i class="fa-solid fa-asterisk"></i> Confirm </button>
+
+            <br><br><br>
+            <h3><i class="fa-solid fa-envelope-open"></i> Hidden Message Revealed</h3>
+            <br>
+            <div class="mb-3">
+                <textarea name="Encode[secret-message]" rows="2" placeholder="Type your secret message here..." class="form-control" required></textarea>
+            </div>
         </form>
+        </div>
+      </div>
     </div>
 </body>
