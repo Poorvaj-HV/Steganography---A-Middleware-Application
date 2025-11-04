@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const Encode = require('./models/encode.js');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const wrapAsync = require('./utils/wrapAsync.js');
+const ExpressError = require('./utils/ExpressError.js');
 // const multer = require('multer');
 // const sharp = require('sharp');
 
@@ -67,7 +69,7 @@ app.get('/encode', (req, res) => {
     res.render('pages/encode.ejs');
 });
 
-// app.post('/encode', upload.single('image'), async(req, res) => {
+// app.post('/encode', wrapAsync, upload.single('image'), async(req, res, next) => {
 //     try {
 //         const { message, email } = req.body;
 //         const imageFile = req.file;
@@ -100,8 +102,8 @@ app.get('/encode', (req, res) => {
 //             encodedImage: encodedPath.replace('public/', ''),
 //             message: 'Message encoded successfully!' 
 //         });
-//     } catch (error) {
-//         console.error(error);
+//     } catch (err) {
+//         console.error(err);
 //         res.status(500).send('Encoding failed');
 //     }
 // });
@@ -142,6 +144,15 @@ app.get('/testencode', async(req, res) => {
 
 app.listen(8000, () => {
     console.log('Server is running on port 8000');
+});
+
+app.use((req, res, next) => {
+    next(new ExpressError(404, 'Page Not Found'));
+});
+
+app.use((err, req, res, next) => {
+    let { statusCode, message } = err;
+    res.status(statusCode).send(message);
 });
 
 app.get('/', (req, res) => {
