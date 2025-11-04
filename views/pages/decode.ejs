@@ -299,20 +299,24 @@
             <p> Enter a valid email to extract the secret message hidden within it. </p>
             <br>
     <div class="formdiv">
-        <form method="POST" action="/decode">
+        <form method="POST" action="/decode" novalidate class="needs-validation">
             <div class="mb-3">
                 <lable for="email" class="form-label"><i class="fa-regular fa-envelope"></i> Enter a valid Email</lable>
                 <input type="email" name="Encode[email]" placeholder="Enter a valid email" class="form-control" required>
+                <div class="invalid-feedback">Please enter a valid Email</div>
+                <div class="valid-feedback">email looks good, verify email</div>
             </div>
             <div class="mb-3">
                 <lable for="password" class="form-label"><i class="fa-solid fa-eye-slash"></i> Enter password </lable>
                 <input type="password" name="Encode[password]" placeholder="Enter password" class="form-control" required>
+                <div class="invalid-feedback">please enter a correct password</div>
             </div>
             <button class="btn btn-outline-dark" type="submit"><i class="fa-solid fa-square-envelope"></i> Verify Email </button>
             <br><br>
             <div class="mb-3 col-md-4">
                 <label for="otp" class="form-label"> Enter OTP </label>
                 <input type="text" name="otp" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6}" maxlength="6" class="form-control" required>
+                <div class="invalid-feedback">Please enter a valid 6-digit OTP</div>
             </div>
             <button class="btn btn-outline-dark" type="submit"><i class="fa-solid fa-asterisk"></i> Confirm </button>
 
