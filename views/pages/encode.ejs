@@ -325,7 +325,7 @@
             <p> Upload an Image and enter your secret message to encode it invisibly. </p>
             <br>
     <div class="formdiv">
-        <form method="POST" action="/encode" novalidate class="needs-validation">
+        <form method="POST" action="/encode" novalidate class="needs-validation" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="image" class="form-label"><i class="fa-solid fa-upload"></i> 1. Upload Image:</label>
                 <input type="file" name="Encode[image]" accept="image/*" class="form-control" required>
