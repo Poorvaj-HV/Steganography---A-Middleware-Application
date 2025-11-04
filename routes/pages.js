@@ -1,0 +1,109 @@
+const express = require('express');
+const router = express.Router();
+const wrapAsync = require('../utils/wrapAsync.js');
+const { encodeSchema } = require('../schema.js');
+const ExpressError = require('../utils/ExpressError.js');
+const Encode = require('../models/encode.js');
+
+// Multer configuration
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'public/uploads/');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + '-' + file.originalname);
+//     }
+// });
+// const upload = multer({ storage });
+
+// Simple steganography function
+// function hideMessage(imageBuffer, message) {
+//     const messageBytes = Buffer.from(message, 'utf8');
+//     const lengthBytes = Buffer.alloc(4);
+//     lengthBytes.writeUInt32BE(messageBytes.length, 0);
+    
+//     const dataToHide = Buffer.concat([lengthBytes, messageBytes]);
+//     const modifiedImage = Buffer.from(imageBuffer);
+    
+//     for (let i = 0; i < dataToHide.length * 8 && i < modifiedImage.length; i++) {
+//         const byteIndex = Math.floor(i / 8);
+//         const bitIndex = i % 8;
+//         const bit = (dataToHide[byteIndex] >> (7 - bitIndex)) & 1;
+//         modifiedImage[54 + i] = (modifiedImage[54 + i] & 0xFE) | bit;
+//     }
+    
+//     return modifiedImage;
+// }
+
+
+router.get('/home', (req, res) => {
+    res.render('pages/home.ejs');
+});
+
+router.get('/encode', (req, res) => {
+    res.render('pages/encode.ejs');
+});
+
+// router.post('/encode', wrapAsync, upload.single('image'), async(req, res, next) => {
+//     try {
+//         const { message, email } = req.body;
+//         const imageFile = req.file;
+        
+//         if (!imageFile || !message) {
+//             return res.status(400).send('Image and message are required');
+//         }
+        
+//         // Read the uploaded image
+//         const imageBuffer = require('fs').readFileSync(imageFile.path);
+        
+//         // Hide message in image
+//         const encodedImage = hideMessage(imageBuffer, message);
+        
+//         // Save encoded image
+//         const encodedPath = `public/uploads/encoded-${Date.now()}.png`;
+//         require('fs').writeFileSync(encodedPath, encodedImage);
+        
+//         // Save to database
+//         const newEncode = new Encode({ 
+//             email, 
+//             image: imageFile.filename,
+//             encodedImage: encodedPath.replace('public/', ''),
+//             message: message.substring(0, 50) + '...' // Store preview only
+//         });
+//         await newEncode.save();
+        
+//         res.json({ 
+//             success: true, 
+//             encodedImage: encodedPath.replace('public/', ''),
+//             message: 'Message encoded successfully!' 
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Encoding failed');
+//     }
+// });
+
+router.get('/decode', (req, res) => {
+    res.render('pages/decode.ejs');
+});
+
+router.get('/decode/:id', (req, res) => {
+    let { id } = req.params;
+    const eData = Encode.findById(id);
+    console.log(eData);
+});
+
+router.get('/admin', (req, res) => {
+    res.render('pages/admin.ejs');
+});
+
+router.get('/listings', async(req, res) => {
+    const allData = await Encode.find({});
+    res.render('pages/listing.ejs', { allData });
+});
+
+router.get('/about', (req, res) => {
+    res.render('pages/about.ejs');
+});
+
+module.exports = router;
