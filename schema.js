@@ -4,9 +4,16 @@ const Joi = require('joi');
 
 module.exports.encodeSchema = Joi.object({
     Encode: Joi.object({
-        image : Joi.string().required(),
         message : Joi.string().required().max(500),
         email: Joi.string().required().email(),
         password: Joi.string().required().min(5).max(20),
+    }).required(),
+});
+
+module.exports.decodeSchema = Joi.object({
+    Decode: Joi.object({
+        email: Joi.string().required().email().pattern(/@gmail\.com$/),
+        password: Joi.string().required().min(5).max(20),
+        emailVerified: Joi.string().valid('true').required(),
     }).required(),
 });
