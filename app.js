@@ -8,12 +8,14 @@ const ejsMate = require('ejs-mate');
 // const wrapAsync = require('./utils/wrapAsync.js'); -- removed as not used directly here
 const ExpressError = require('./utils/ExpressError.js');
 // const { encodeSchema } = require('./schema.js'); removed as not used directly here
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const pagesRoutes = require('./routes/pages.js');
 
 // const multer = require('multer');
 // const sharp = require('sharp');
-// remainder - apply wrapAsync where needed in routes that use async functions **** and use encodeSchema for validation in post routes
+// remainder - apply wrapAsync where needed in routes that use async functions **** and use encodeSchema for validation in post routes and define flash messages accordingly see screen shots****
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +24,27 @@ app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+const sessionOptions = {
+    secret: "mysupersecretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,   // 1 week = 7 days * 24 hours * 60 minutes * 60 seconds * 1000 ms. 1000 ms = 1 second
+        maxAge: 7 * 24 * 60 * 60 * 1000,                // 1 week
+        httpOnly: true                                  // cookie cannot be accessed via client-side scripts, only sent via HTTP, enhancing security
+    }
+};
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');  // without next(), we will stuck in this middleware
+    res.locals.error = req.flash('error');
+    next();
+});
+
+// Note: session and flash should be set up before defining routes so that they are accessible in all routes
 app.use('/', pagesRoutes);    // use the routes defined in routes/pages.js
 
 

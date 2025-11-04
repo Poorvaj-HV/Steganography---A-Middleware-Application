@@ -97,12 +97,20 @@
 
     </style>
 </head>
+
 <body class="bg-gray-50">
 
     <!-- <h1>Home Page</h1> -->
 
     <custom-navbar></custom-navbar>
     
+    <% if (success && success.length > 0) { %>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mx-4 mt-4">
+            <%= success %>
+        </div>
+    <% } %>
+
+
     <main class="container mx-auto px-4 py-8">
         <!-- Hero Section -->
         <section class="flex flex-col md:flex-row items-center justify-between gap-12 py-16">
