@@ -18,13 +18,27 @@
                 <textarea name="Encode[message]" rows="2" placeholder="Type your secret message here..." class="form-control" required></textarea>
                 <div class="invalid-feedback">Please enter a secret message</div>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <lable for="email" class="form-label"><i class="fa-regular fa-envelope"></i> Enter a valid Email</lable>
                 <input type="email" name="Encode[email]" placeholder="Enter a valid email" class="form-control" required>
                 <div class="invalid-feedback">please enter a valid Email</div>
+            </div> -->
+            <div class="mb-3">
+                <label for="email" class="form-label"><i class="fa-regular fa-envelope"></i> Enter a valid Email</label>
+                <div class="input-group">
+                    <input type="email" id="email" name="Encode[email]" placeholder="Enter a valid email" class="form-control" required>
+                    <button type="button" id="sendOtpBtn" class="btn btn-outline-dark">Send OTP</button>
+                </div>
+                <div class="invalid-feedback">Please enter a valid Email</div>
+            </div>
+
+            <div class="mb-3" id="otpDiv" style="display: none;">
+                <label for="otp" class="form-label"><i class="fa-solid fa-key"></i> Enter OTP</label>
+                <input type="text" id="otp" name="Encode[otp]" placeholder="Enter 6-digit OTP" class="form-control" maxlength="6" required>
+                <div class="invalid-feedback">Please enter valid OTP</div>
             </div>
             <div class="mb-3">
-                <lable for="password" class="form-label"><i class="fa-solid fa-eye-slash"></i> Enter password </lable>
+                <label for="password" class="form-label"><i class="fa-solid fa-eye-slash"></i> Enter password </label>
                 <input type="password" name="Encode[password]" placeholder="Enter password" class="form-control" required>
                 <div class="valid-feedback">password looks good</div>
                 <div class="invalid-feedback">please enter a password</div>
@@ -35,5 +49,49 @@
     </div>
         </div>
     </div>
-    
+
+    <!-- OTP Sending Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sendOtpBtn = document.getElementById('sendOtpBtn');
+        const otpDiv = document.getElementById('otpDiv');
+        const emailInput = document.querySelector('input[name="Encode[email]"]');
+
+        sendOtpBtn.addEventListener('click', async function() {
+            const email = emailInput.value;
+            if (!email) {
+                alert('Please enter an email address');
+                return;
+            }
+
+            try {
+                const response = await fetch('/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    otpDiv.style.display = 'block';
+                    alert(data.message);
+                    sendOtpBtn.disabled = true;
+                    emailInput.readOnly = true;
+                
+                    // Enable button after 1 minute
+                    setTimeout(() => {
+                        sendOtpBtn.disabled = false;
+                    }, 60000);
+                } else {
+                    alert(data.error);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Failed to send OTP. Please try again.');
+            }
+        });
+    });
+    </script>
 </body>
