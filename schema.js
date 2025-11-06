@@ -4,17 +4,19 @@ const Joi = require('joi');
 
 module.exports.encodeSchema = Joi.object({
     Encode: Joi.object({
-        message : Joi.string().required().max(500),
+        title: Joi.string().required().max(100),
+        message: Joi.string().required().max(500),
         email: Joi.string().required().email(),
-        otp: Joi.string().required().min(6).length(6),
+        otp: Joi.string().required().length(6),
         password: Joi.string().required().min(5).max(20),
-    }).required(),
+    }).required()
 });
 
 module.exports.decodeSchema = Joi.object({
     Decode: Joi.object({
-        email: Joi.string().required().email().pattern(/@gmail\.com$/),
+        email: Joi.string().required().email(),
         password: Joi.string().required().min(5).max(20),
-        emailVerified: Joi.string().valid('true').required(),
-    }).required(),
+        otp: Joi.string().length(6),
+        encryptionId: Joi.string()
+    }).required()
 });
