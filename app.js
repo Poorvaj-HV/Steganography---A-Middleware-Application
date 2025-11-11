@@ -1,31 +1,56 @@
+require('dotenv').config();     // dotenv is used to load environment variables from a .env file into process.env
+
 const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-// const Encode = require('./models/encode.js');  // removed as not used directly here
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-// const wrapAsync = require('./utils/wrapAsync.js'); -- removed as not used directly here
 const ExpressError = require('./utils/ExpressError.js');
-// const { encodeSchema } = require('./schema.js'); removed as not used directly here
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 
 const pagesRoutes = require('./routes/pages.js');
 
-// const multer = require('multer');
-// const sharp = require('sharp');
-// remainder - apply wrapAsync where needed in routes that use async functions **** and use encodeSchema for validation in post routes and define flash messages accordingly see screen shots****
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+// const MONGO_URL = "mongodb://127.0.0.1:27017/steganoDB"; -> for local MongoDB
+const dbUrl = process.env.ATLASDB_URL;      // for MongoDB Atlas
+
+main()
+  .then(() => {
+    console.log("Connected to DB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+async function main() {
+    await mongoose.connect(dbUrl);
+}
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET
+    },
+    touchAfter: 24 * 3600,      // change session only once in 24 hours
+});
+
+store.on("error", () => {
+    console.log("ERROR in MONGO SESSION STORE", err);
+});
+
 const sessionOptions = {
-    secret: "mysupersecretcode",
+    store,                      // store session data in MongoDB - Atlas
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -49,30 +74,6 @@ app.use((req, res, next) => {   // this function will run for every single reque
 app.use('/', pagesRoutes);    // use the routes defined in routes/pages.js
 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/steganoDB";
-
-main()
-  .then(() => {
-    console.log("Connected to DB");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-async function main() {
-    await mongoose.connect(MONGO_URL);
-}
-
-// app.get('/testencode', async(req, res) => {
-//     let sampleData = new Encode({
-//         email: "poovi@gmail.com",
-//         image: "sampleImage.jpg"
-//     });
-
-//     await sampleData.save();
-//     console.log("Sample data saved to database");
-//     res.send("Test encode data saved to database");
-// });
 
 app.listen(8000, () => {
     console.log('Server is running on port 8000');
