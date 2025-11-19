@@ -148,5 +148,4 @@ User → Upload Image → Node.js Server
 ## 👨‍💻 **Developed By**
 
 **Poorvaj H V**  
-Final Year CSE Student
-StegoHide - Steganography Project (MERN Stack)
+Final Year Computer Science Student
