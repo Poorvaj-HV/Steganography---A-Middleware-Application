@@ -138,12 +138,8 @@ User → Upload Image → Node.js Server
 
 ## 🛠️ **Future Enhancements**
 
-- AES Encryption for added security  
-<<<<<<< HEAD
+- AES Encryption for added security
 - ML-based stego/tamper detection model integration as Middleware layer
-=======
-- ML-based stego/tamper detection 
->>>>>>> 4bfbaa9 (updated README.md)
 - React/Next.js front-end  
 - Video/audio steganography  
 
